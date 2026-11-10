@@ -31,12 +31,12 @@ These models are trained or adapted for a legal-document understanding pipeline 
 
 ## Core model architectures
 
-| Backbone | Main design ideas |
-|---|---|
-| `custom_mha` | RoPE, full multi-head attention, SwiGLU, RMSNorm |
-| `mla_moe` | Multi-head latent attention, mixture-of-experts routing, decoupled RoPE |
-| `gqa_conv` | GQA with dual-path FFN, causal depthwise convolution, RoPE |
-| `gqa_alibi` | GQA with ALiBi positional bias and SwiGLU-based blocks |
+| Backbone     | Main design ideas                                                       |
+| ------------ | ----------------------------------------------------------------------- |
+| `custom_mha` | RoPE, full multi-head attention, SwiGLU, RMSNorm                        |
+| `mla_moe`    | Multi-head latent attention, mixture-of-experts routing, decoupled RoPE |
+| `gqa_conv`   | GQA with dual-path FFN, causal depthwise convolution, RoPE              |
+| `gqa_alibi`  | GQA with ALiBi positional bias and SwiGLU-based blocks                  |
 
 ## Methodology
 
@@ -83,6 +83,19 @@ To reproduce the project:
 3. Load the correct backbone tokenizer and model.
 4. Run the notebook cells in sequence or use `Run All`.
 5. If you have no checkpoint, uncomment training cells in the relevant section and train first.
+
+## Important: Hugging Face token setup
+
+Before running any notebook that downloads data or models from Hugging Face, replace any placeholder token values with your own personal `HF_TOKEN`.
+
+Use your own token in the relevant notebook cell or environment variable wherever the code asks for it (for example via Kaggle secrets, `os.environ["HF_TOKEN"]`, or a local secret manager). Do not commit or share a real token in GitHub.
+
+Example:
+
+- `HF_TOKEN = "YOUR_OWN_HUGGINGFACE_TOKEN"`
+- or set `os.environ["HF_TOKEN"] = "YOUR_OWN_HUGGINGFACE_TOKEN"`
+
+This repository expects each user to provide their own token when the notebooks prompt for it.
 
 ## Notes
 
