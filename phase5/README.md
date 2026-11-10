@@ -48,6 +48,12 @@ The notebook expects:
 - output directories for Phase 2 and Phase 3 artifacts
 - optional Hugging Face login if using external model or dataset hosting
 
+## Important: Hugging Face token setup
+
+This phase may use Hugging Face downloads or authenticated access. If the notebook asks for `HF_TOKEN`, replace it with your own token in the relevant cell or environment variable.
+
+Do not use a placeholder value, and never commit your actual token to the repository.
+
 ## How to run
 
 1. Open `phase5/phase5.ipynb`.

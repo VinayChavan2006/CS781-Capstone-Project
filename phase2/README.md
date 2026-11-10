@@ -71,6 +71,12 @@ The notebook includes configuration cells that validate the presence of tokenize
 - token-level predictions or merged submission outputs
 - logs for comparison across adaptation methods
 
+## Important: Hugging Face token setup
+
+If a notebook cell or setup block asks for `HF_TOKEN`, replace it with your own Hugging Face access token. This applies wherever the code calls `login(token=HF_TOKEN)` or downloads from a Hugging Face dataset or repo.
+
+Never commit or publish your actual token.
+
 ## Notes
 
 Phase 2 is a bridge between general legal language modeling and task-specific legal information extraction. It demonstrates how backbone quality from Phase 1 transfers to a structured sequence-labeling task.

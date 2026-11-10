@@ -69,6 +69,12 @@ Before running the notebook, ensure:
 - final predictions and deliverable-ready outputs
 - organized documentation for the complete project narrative
 
+## Important: Hugging Face token setup
+
+If the notebook requests an `HF_TOKEN`, use your own personal Hugging Face access token in that location. Replace any placeholder or example value before running the login/download cells.
+
+Never commit or share the real token with others.
+
 ## Notes
 
 This final phase is the capstone culmination: it ties together the earlier experimentation into a coherent, reusable, submission-ready pipeline for legal text modeling and adaptation.

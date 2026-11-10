@@ -54,6 +54,12 @@ Before running the notebook:
 4. Execute the notebook cells in order.
 5. Keep training or evaluation flags set according to whether you are loading existing inference artifacts or running a new training pipeline.
 
+## Important: Hugging Face token setup
+
+Any place the notebook prompts for `HF_TOKEN` should be filled with your own personal token. Set it in the notebook, your Kaggle secrets, or your environment before the Hugging Face login/download steps run.
+
+Keep the real token private and do not push it to GitHub.
+
 ## Expected outputs
 
 - organized experimental output folders

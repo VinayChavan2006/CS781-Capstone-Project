@@ -61,6 +61,12 @@ The notebook expects:
 
 The code includes checks to ensure the model and tokenizer pair are compatible and to minimize common compatibility mistakes.
 
+## Important: Hugging Face token setup
+
+Before running any Hugging Face download or login step, insert your own personal `HF_TOKEN` wherever the notebook asks for it.
+
+This includes any Kaggle secret, environment variable, or `login(token=HF_TOKEN)` usage. Do not use a shared or example token.
+
 ## How to run
 
 1. Open `phase3/phase3.ipynb`.

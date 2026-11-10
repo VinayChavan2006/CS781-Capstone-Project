@@ -8,12 +8,12 @@ The main goal of Phase 1 is to build strong base language models for legal text 
 
 ## Architectures included
 
-| Backbone | Architecture summary |
-|---|---|
-| `custom_mha` | Multi-head attention with RoPE, RMSNorm, and SwiGLU |
-| `mla_moe` | Multi-head latent attention with MoE routing and specialized feed-forward blocks |
-| `gqa_conv` | GQA with dual-path FFN and causal depthwise convolution |
-| `gqa_alibi` | GQA with ALiBi positional bias and SwiGLU layers |
+| Backbone     | Architecture summary                                                             |
+| ------------ | -------------------------------------------------------------------------------- |
+| `custom_mha` | Multi-head attention with RoPE, RMSNorm, and SwiGLU                              |
+| `mla_moe`    | Multi-head latent attention with MoE routing and specialized feed-forward blocks |
+| `gqa_conv`   | GQA with dual-path FFN and causal depthwise convolution                          |
+| `gqa_alibi`  | GQA with ALiBi positional bias and SwiGLU layers                                 |
 
 ## Methodology
 
@@ -75,6 +75,18 @@ Common setup variables include:
 - checkpoint files (`.pt`)
 - generated text from decoding strategies
 - evaluation summaries and comparison metrics
+
+## Important: Hugging Face token setup
+
+When the notebook asks for a Hugging Face token, use your own personal `HF_TOKEN` instead of any placeholder or example value.
+
+Replace the token in the relevant cell wherever it is requested, such as:
+
+- Kaggle secrets (`UserSecretsClient().get_secret("HF")`)
+- environment variable setup (`os.environ["HF_TOKEN"]`)
+- direct token assignment in login code
+
+Do not commit a real Hugging Face token to the repository or share it publicly.
 
 ## Notes
 

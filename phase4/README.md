@@ -77,6 +77,12 @@ To reproduce the results:
 - zipped or packaged submission outputs
 - project-level documentation for deliverables
 
+## Important: Hugging Face token setup
+
+Wherever the code asks for `HF_TOKEN`, replace it with your own personal Hugging Face token before executing the notebook.
+
+Use your own token for secret retrieval, environment configuration, or login calls; do not commit or expose the real value in the repository.
+
 ## Notes
 
 Phase 4 consolidates many experimental threads from the earlier phases into a final ablation and submission-ready stage. It is the closest phase to the final capstone deliverable and evaluation iteration.
