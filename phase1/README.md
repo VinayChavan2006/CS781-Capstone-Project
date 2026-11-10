@@ -172,13 +172,7 @@ x_norm ─────────┤  Linear W₁₃ → split(a,g) → SiLU(a)
 **Architecture Diagrams**
 ## Model Architectures
 
-![Custom MHA](./mha_arch.png)
-
-![MLA MoE](./gqa_conv_arch.png)
-
-![GQA ALiBi](./gqa_alibi_arch.png)
-
-![GQA Conv](./mla_moe_arch.png)
+![All Architectures](./all_architectures.jpg)
 
 ---
 
