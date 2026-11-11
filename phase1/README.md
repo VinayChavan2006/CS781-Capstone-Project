@@ -204,36 +204,16 @@ x_norm ─────────┤  Linear W₁₃ → split(a,g) → SiLU(a)
 - Automatic fallback: if a generation is shorter than the target word count, it is re-sampled with nucleus sampling and the longer candidate is kept.
 - Exact 128-word truncation after decoding.
 
----
+## 5. How to Run
 
-## 5. Experimental Setup
-
-| Item                    | Value                                      |
-|-------------------------|--------------------------------------------|
-| Hardware                | Single NVIDIA A100 / H100 (or equivalent)  |
-| Precision               | bfloat16 (preferred) / float16             |
-| Effective batch size    | 65 536 tokens                              |
-| Total tokens seen       | ~150 M                                     |
-| Peak learning rate      | 6 × 10⁻⁴                                   |
-| Warm-up steps           | 100                                        |
-| Weight decay            | 0.1                                        |
-| Gradient clipping       | 1.0                                        |
-| Evaluation frequency    | every 250 steps                            |
-| Checkpoint frequency    | every 250 steps                            |
-| Max wall-clock          | 8 hours (auto-adjusts schedule)            |
-
----
-
-## 6. How to Run
-
-### 6.1 Prerequisites
+### 5.1 Prerequisites
 ```bash
 pip install torch tqdm ijson huggingface_hub numpy
 # Optional evaluation extras
 pip install transformers bert-score sacrebleu evaluate datasets
 ```
 
-### 6.2 Scenario A – Using Pre-trained Checkpoints (Recommended)
+### 5.2 Scenario A – Using Pre-trained Checkpoints (Recommended)
 1. Place the four tokenizer files and four `.pt` checkpoints under `/kaggle/working/phase1-models/` (or set `DATASET_DIR`).
 2. Open `phase1.ipynb`.
 3. Run the **Shared path resolution** cell. It must print `exists=True` for every tokenizer and checkpoint.
@@ -241,7 +221,7 @@ pip install transformers bert-score sacrebleu evaluate datasets
 5. Skip all training cells (they are already commented out).
 6. Run the Generation / Prediction / Decoding-comparison cells.
 
-### 6.3 Scenario B – Training from Scratch
+### 5.3 Scenario B – Training from Scratch
 1. Run the shared path cell.
 2. Activate the target backbone.
 3. Run the data-download + cleaning + BPE training + sharding cells.
@@ -249,7 +229,7 @@ pip install transformers bert-score sacrebleu evaluate datasets
 5. Training automatically resumes from the latest checkpoint if one exists.
 6. After training finishes, proceed to the generation cells exactly as in Scenario A.
 
-### 6.4 Producing the Official Submission
+### 5.4 Producing the Official Submission
 ```python
 # Inside the activated backbone section
 predictions = predict_all(model, ids, prompts, PARTIAL_PATH, group=100)
@@ -260,7 +240,7 @@ The final `prediction.json` maps every test ID to a dictionary `{"text": "<exact
 
 ---
 
-## 7. Generation, Decoding Strategies & Submission
+## 6. Generation, Decoding Strategies & Submission
 
 A comprehensive comparison utility `compare_decoding(...)` evaluates Greedy, Top-k, Nucleus and Beam Search on held-out validation prompts using ROUGE-1/2/L and Distinct-3.  
 
@@ -277,7 +257,7 @@ no_repeat_ngram = 4–6
 
 ---
 
-## 8. File Layout & Checkpoints
+## 7. File Layout & Checkpoints
 
 ```
 phase1-models/
@@ -301,7 +281,7 @@ cs781_phase1/
 
 ---
 
-## 9. Reproducibility Notes
+## 8. Reproducibility Notes
 
 - All random seeds are fixed (`SEED = 42`).
 - Document sampling uses a deterministic hash for the train/val split.
