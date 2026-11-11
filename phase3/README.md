@@ -1,10 +1,10 @@
-```markdown
+
 # CS781 Phase-3: Legal Rhetorical Role (RR) Classification
 
 **Course:** CS781 Capstone  
 **Phase:** Phase-3 (Downstream Adaptation – Rhetorical Role / Document Classification)  
 **Task:** Sentence-level Rhetorical Role labelling of Indian legal judgments  
-**Domains:** CL (Case Law) and IT (Income Tax / Tribunal)  
+**Domains:** CL (Corporate Law) and IT (Information Technology)  
 **Backbones:** All four Phase-1 foundation models (`custom_mha`, `mla_moe`, `gqa_alibi`, `gqa_conv`)
 
 This repository consolidates the complete Phase-3 pipelines for every Phase-1 backbone. Each architecture section reloads the corresponding Phase-1 checkpoint + tokenizer, wraps the decoder as a bidirectional sentence encoder, attaches a classification head (optionally with document-level BiGRU context), and runs a full matrix of parameter-efficient fine-tuning (PEFT), loss-function, context-modelling and knowledge-distillation experiments. Training is resumable; evaluation reports macro-F1 on both domains; the best models are packaged into official submission zips.
@@ -38,20 +38,20 @@ This repository consolidates the complete Phase-3 pipelines for every Phase-1 ba
 ### 1.2 Domains
 | Domain code | Description |
 |-------------|-------------|
-| **CL** | Case-law judgments (Supreme Court / High Courts) |
-| **IT** | Income-tax / tribunal orders |
+| **CL** | Corporate Law |
+| **IT** | Information Technology |
 
 Each domain has its own train / dev / test split.
 
 ### 1.3 Label Vocabulary
 Labels are loaded from `Phase_3_RR/Train/label_vocab.json`.  
-Typical rhetorical roles (exact list is data-driven):
+Typical rhetorical roles (The list is data-driven):
 
 ```
 Fact, ArgumentPetitioner, ArgumentRespondent,
 Statute, PrecedentReliedUpon, PrecedentNotReliedUpon,
 RatioOfTheDecision, RulingByLowerCourt, RulingByPresentCourt,
-Issue, None, …
+Issue, …
 ```
 
 ```python
@@ -205,7 +205,7 @@ Injection targets cover attention projections (`q`, `k`, `v`, `o`, `qkv`, …) a
 | Name | Formula / Notes |
 |------|-----------------|
 | **Cross-Entropy** (`loss_ce`) | Standard multi-class CE |
-| **Focal Loss** (`loss_focal`) | \(\mathrm{FL}(p_t)=-\alpha_t(1-p_t)^\gamma\log p_t\) with \(\gamma=2\), \(\alpha\) inverse-frequency or uniform |
+| **Focal Loss** (`loss_focal`) | $\mathrm{FL}(p_t) = -\alpha_t (1-p_t)^\gamma \log(p_t)$ with $\gamma=2$, and $\alpha_t$ either inverse-frequency weighted or uniform. |
 | **Label-smoothed CE** | Optional smoothing 0.1 (used in some KD runs) |
 
 Class weights can be computed from the training fold and applied to any of the above losses.
