@@ -40,7 +40,7 @@ $$
 D = (w_1, w_2, \ldots, w_n)
 $$
 
-**Output:** A fluent natural-language summary \(\hat{Y}\) of at most 256 tokens, capturing:
+**Output:** A fluent natural-language summary $\hat{Y}$ of at most 256 tokens, capturing:
 
 - Factual background
 - Legal issues
@@ -52,7 +52,7 @@ $$
 
 Pure abstractive generation from a long document can exceed the context window of the Phase-1 models.
 
-Phase-6 therefore constructs a token-budgeted representation \(D^*\) satisfying:
+Phase-6 therefore constructs a token-budgeted representation $D^*$ satisfying:
 
 $$
 |D^*| \leq 750
@@ -111,7 +111,7 @@ $$
 D_H = \{S_1, S_2, \ldots, S_m\}
 $$
 
-Each section \(S_i\) corresponds to a coherent part of the judgment, such as:
+Each section $S_i$ corresponds to a coherent part of the judgment, such as:
 
 - Factual background
 - Arguments presented by the parties
@@ -132,13 +132,13 @@ $$
 |D^*| \leq 750
 $$
 
-Here, \(\oplus\) denotes sequence concatenation.
+Here, $\oplus$ denotes sequence concatenation.
 
 This representation preserves the most relevant information from the original judgment while ensuring that the input remains within the model's context constraints.
 
 ## 4. Training Sequence Construction
 
-For each document-summary pair \((D^*, Y)\), let the reference summary be:
+For each document-summary pair $(D^*, Y)$, let the reference summary be:
 
 $$
 Y = (y_1, y_2, \ldots, y_T)
@@ -153,9 +153,9 @@ $$
 | Component | Description |
 |---|---|
 | `[BOS]` | Beginning-of-sequence token |
-| \(D^*\) | Token-budgeted legal document |
+| $D^*$ | Token-budgeted legal document |
 | `[SEP]` | Separates the document from the target summary |
-| \(Y\) | Ground-truth reference summary |
+| $Y$ | Ground-truth reference summary |
 | `[EOS]` | End-of-sequence token |
 
 The model learns to predict the summary tokens conditioned on the preceding document and generated summary tokens.
@@ -168,7 +168,7 @@ $$
 \theta_0
 $$
 
-For any position \(t\), the decoder-only Transformer computes a hidden representation using the preceding tokens:
+For any position $t$, the decoder-only Transformer computes a hidden representation using the preceding tokens:
 
 $$
 h_t = f_\theta(x_{<t})
@@ -194,7 +194,7 @@ M_{ij} =
 \end{cases}
 $$
 
-This guarantees that predictions at position \(i\) depend only on tokens at positions \(j \leq i\).
+This guarantees that predictions at position $i$ depend only on tokens at positions $j \leq i$.
 
 ## 6. Causal Language Modelling Objective
 
@@ -216,7 +216,7 @@ L_{\text{LM}} =
 \log p_\theta(y_t \mid D^*, y_{<t})
 $$
 
-where \(S\) denotes the positions corresponding to the target summary and the end-of-sequence token.
+where $S$ denotes the positions corresponding to the target summary and the end-of-sequence token.
 
 ### 6.1 Label Masking
 
@@ -248,8 +248,8 @@ $$
 
 where:
 
-- \(\theta_0\) represents the original pretrained parameters.
-- \(\Delta\theta\) represents the learned parameter update.
+- $\theta_0$ represents the original pretrained parameters.
+- $\Delta\theta$ represents the learned parameter update.
 
 For LoRA / LoRMA-style low-rank adaptation, a weight matrix is reparameterized as:
 
@@ -267,10 +267,10 @@ $$
 
 Here:
 
-- \(d\) is the output dimension.
-- \(k\) is the input dimension.
-- \(r\) is the low-rank dimension.
-- \(r \ll \min(d, k)\).
+- $d$ is the output dimension.
+- $k$ is the input dimension.
+- $r$ is the low-rank dimension.
+- $r \ll \min(d, k)$.
 
 The effective weight update is:
 
@@ -278,7 +278,7 @@ $$
 \Delta W = BA
 $$
 
-Only the low-rank adapter matrices \(A\) and \(B\) are trained, while the original pretrained weights remain frozen.
+Only the low-rank adapter matrices $A$ and $B$ are trained, while the original pretrained weights remain frozen.
 
 This significantly reduces the number of trainable parameters and memory requirements.
 
@@ -288,9 +288,9 @@ Knowledge distillation optionally transfers knowledge from a teacher model to th
 
 Let:
 
-- \(p_T\) denote the teacher probability distribution.
-- \(p_S\) denote the student probability distribution.
-- \(\tau\) denote the distillation temperature.
+- $p_T$ denote the teacher probability distribution.
+- $p_S$ denote the student probability distribution.
+- $\tau$ denote the distillation temperature.
 
 The softened probability distributions are:
 
@@ -302,7 +302,7 @@ $$
 p_S(\tau) = \text{Softmax}\left(\frac{z_S}{\tau}\right)
 $$
 
-where \(z_T\) and \(z_S\) represent the teacher and student logits, respectively.
+where $z_T$ and $z_S$ represent the teacher and student logits, respectively.
 
 The knowledge distillation loss is defined using Kullback-Leibler divergence:
 
@@ -328,13 +328,13 @@ L =
 \lambda L_{\text{KD}}
 $$
 
-where \(\lambda \in [0, 1]\) controls the contribution of the distillation objective.
+where $\lambda \in [0, 1]$ controls the contribution of the distillation objective.
 
 ## 9. Semantic Alignment Loss
 
 To encourage semantic consistency between the generated summary and the reference summary, an optional semantic alignment loss is introduced.
 
-Let \(E(\cdot)\) denote a sentence encoder.
+Let $E(\cdot)$ denote a sentence encoder.
 
 The generated and reference summary embeddings are:
 
@@ -374,9 +374,9 @@ $$
 
 where:
 
-- \(\alpha\) controls the contribution of knowledge distillation.
-- \(\beta\) controls the contribution of semantic alignment.
-- \(L_{\text{LM}}\) provides the primary autoregressive generation objective.
+- $\alpha$ controls the contribution of knowledge distillation.
+- $\beta$ controls the contribution of semantic alignment.
+- $L_{\text{LM}}$ provides the primary autoregressive generation objective.
 
 These additional objectives are optional and can be enabled or disabled through their respective hyperparameters.
 
@@ -419,7 +419,7 @@ $$
 
 denote the set of n-grams already generated in the current summary.
 
-A candidate token \(y\) is blocked if appending it would create an n-gram that has already appeared.
+A candidate token $y$ is blocked if appending it would create an n-gram that has already appeared.
 
 Formally:
 
@@ -743,10 +743,10 @@ This prevents vocabulary mismatches and ensures that token IDs remain compatible
 
 All important hyperparameters are explicitly configurable, including:
 
-- Knowledge distillation weight \(\lambda\)
-- Knowledge distillation temperature \(\tau\)
-- Semantic alignment weight \(\alpha\) or \(\beta\), depending on the objective convention
-- LoRA / LoRMA rank \(r\)
+- Knowledge distillation weight $\lambda$
+- Knowledge distillation temperature $\tau$
+- Semantic alignment weight $\alpha$ or $\beta$, depending on the objective convention
+- LoRA / LoRMA rank $r$
 - Maximum document token budget
 - Maximum summary generation length
 - N-gram repetition blocking size
